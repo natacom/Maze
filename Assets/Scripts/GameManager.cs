@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject MainCamera;
     public GameObject Field;
     public GameObject PlayerPref;
     public GameObject GoalPref;
+
+    public int m_rowNum = 10;
+    public int m_columnNum = 10;
 
     private GameObject m_player;
     private GameObject m_playerCamera;
@@ -16,35 +18,31 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_player = GameObject.Instantiate(
+        GetComponent<FieldGenerator>().Generate(m_rowNum, m_columnNum);
+
+        // Adjust floor
+        var floor = GameObject.FindGameObjectWithTag("Floor").transform;
+        floor.localScale = new Vector3(m_columnNum, 0.1f, m_rowNum);
+        floor.position = new Vector3(floor.localScale.x / 2, 0, floor.localScale.z / 2);
+
+        m_player = Instantiate(
             PlayerPref,
-            new Vector3(-4.5f, 0.6f, -4.5f),
+            new Vector3(0.5f, 0.6f, 0.5f),
             Quaternion.identity,
             Field.transform);
-        m_goal = GameObject.Instantiate(
+        m_goal = Instantiate(
             GoalPref,
-            new Vector3(4.5f, 0.5f, 4.5f),
+            new Vector3(m_columnNum - 0.5f, 0.5f, m_rowNum - 0.5f),
             Quaternion.identity,
             Field.transform);
 
         m_playerCamera = m_player.GetComponentInChildren<Camera>().gameObject;
 
-        MainCamera.SetActive(false);
-        m_playerCamera.SetActive(true);
+        //m_playerCamera.SetActive(true);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return)) {
-            if (MainCamera.activeInHierarchy) {
-                MainCamera.SetActive(false);
-                m_playerCamera.SetActive(true);
-            }
-            else {
-                MainCamera.SetActive(true);
-                m_playerCamera.SetActive(false);
-            }
-        }
     }
 }

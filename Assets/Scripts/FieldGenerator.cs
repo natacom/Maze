@@ -11,14 +11,12 @@ public class FieldGenerator : MonoBehaviour
     private List<GameObject> m_PollList = new List<GameObject>();
     private List<GameObject> m_WallList = new List<GameObject>();
 
+    private int m_rowNum;
+    private int m_columnNum;
+
     // Start is called before the first frame update
     void Start()
     {
-        libMaze.Generate(10, 10);
-
-        CreatePolls();
-        CreateOuterWalls();
-        CreateInnerWalls();
     }
 
     // Update is called once per frame
@@ -27,14 +25,26 @@ public class FieldGenerator : MonoBehaviour
         
     }
 
+    public void Generate(int rowNum, int columnNum)
+    {
+        m_rowNum = rowNum;
+        m_columnNum = columnNum;
+
+        libMaze.Generate(m_rowNum, m_columnNum);
+
+        CreatePolls();
+        CreateOuterWalls();
+        CreateInnerWalls();
+    }
+
     private void CreatePolls()
     {
-        for (int r = -5; r <= 5; ++r) {
-            for (int c = -5; c <= 5; ++c) {
+        for (int r = 0; r <= m_rowNum; ++r) {
+            for (int c = 0; c <= m_columnNum; ++c) {
                 m_PollList.Add(
-                    GameObject.Instantiate(
+                    Instantiate(
                         Poll,
-                        new Vector3(r, 0.5f, c),
+                        new Vector3(c, 0.5f, r),
                         Quaternion.identity,
                         m_obstacleContainer.transform));
             }
@@ -43,34 +53,37 @@ public class FieldGenerator : MonoBehaviour
 
     private void CreateOuterWalls()
     {
-        for (int n = 0; n < 10; ++n) {
-            float basePos = -4.5f + n;
+        for (int c = 0; c < m_columnNum; ++c) {
+            float basePos = c + 0.5f;
             // top
             m_WallList.Add(
-                GameObject.Instantiate(
+                Instantiate(
                     Wall,
-                    new Vector3(basePos, 0.5f, -5),
+                    new Vector3(basePos, 0.5f, 0),
                     Quaternion.Euler(0, 90, 0),
-                    m_obstacleContainer.transform));
-            // right
-            m_WallList.Add(
-                GameObject.Instantiate(
-                    Wall,
-                    new Vector3(5, 0.5f, basePos),
-                    Quaternion.identity,
                     m_obstacleContainer.transform));
             // bottom
             m_WallList.Add(
-                GameObject.Instantiate(
+                Instantiate(
                     Wall,
-                    new Vector3(basePos, 0.5f, 5),
+                    new Vector3(basePos, 0.5f, m_rowNum),
                     Quaternion.Euler(0, 90, 0),
+                    m_obstacleContainer.transform));
+        }
+        for (int r = 0; r < m_rowNum; ++r) {
+            float basePos = r + 0.5f;
+            // right
+            m_WallList.Add(
+                Instantiate(
+                    Wall,
+                    new Vector3(m_columnNum, 0.5f, basePos),
+                    Quaternion.identity,
                     m_obstacleContainer.transform));
             // left
             m_WallList.Add(
-                GameObject.Instantiate(
+                Instantiate(
                     Wall,
-                    new Vector3(-5, 0.5f, basePos),
+                    new Vector3(0, 0.5f, basePos),
                     Quaternion.identity,
                     m_obstacleContainer.transform));
         }
@@ -78,15 +91,15 @@ public class FieldGenerator : MonoBehaviour
 
     private void CreateInnerWalls()
     {
-        for (int r = 0; r < 10; ++r) {
-            for (int c = 0; c < 10; ++c) {
-                float x = -4.5f + c;
-                float z = -4.5f + r;
+        for (int r = 0; r < m_rowNum; ++r) {
+            for (int c = 0; c < m_columnNum; ++c) {
+                float x = c + 0.5f;
+                float z = r + 0.5f;
 
                 // top
                 if (r != 0 && libMaze.ExistTopWall(r, c)) {
                     m_WallList.Add(
-                        GameObject.Instantiate(
+                        Instantiate(
                             Wall,
                             new Vector3(x, 0.5f, z - 0.5f),
                             Quaternion.Euler(0, 90, 0),
@@ -96,7 +109,7 @@ public class FieldGenerator : MonoBehaviour
                 // left
                 if (c != 0 && libMaze.ExistLeftWall(r, c)) {
                     m_WallList.Add(
-                        GameObject.Instantiate(
+                        Instantiate(
                             Wall,
                             new Vector3(x - 0.5f, 0.5f, z),
                             Quaternion.identity,

@@ -11,7 +11,6 @@ You can play by keyboard for now.
 - Right arrow: rotate right  
 - Left arrow: rotate left  
 - Space: jump  
-- Return: Player view / Bird's eye view (for debug)  
 
 ## Screenshot
 
@@ -20,3 +19,6 @@ You can play by keyboard for now.
 
 (Bird's eye view)  
 ![birdseye](doc/birdseye.png)  
+
+You can also make the maze bigger by changing 'rowNumber' and 'columnNumber' parameters in GameManager.  
+![bigger birdseye](doc/birdseye2.png)  
