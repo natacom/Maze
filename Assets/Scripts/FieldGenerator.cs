@@ -22,13 +22,20 @@ public class FieldGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     public void Generate(int rowNum, int columnNum)
     {
+        m_PollList.Clear();
+        m_WallList.Clear();
+
         m_rowNum = rowNum;
         m_columnNum = columnNum;
+
+        // Adjust floor
+        var floor = GameObject.FindGameObjectWithTag("Floor").transform;
+        floor.localScale = new Vector3(m_columnNum, 0.1f, m_rowNum);
+        floor.position = new Vector3(floor.localScale.x / 2, 0, floor.localScale.z / 2);
 
         libMaze.Generate(m_rowNum, m_columnNum);
 
