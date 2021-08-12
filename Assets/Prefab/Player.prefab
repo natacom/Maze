@@ -56,7 +56,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.2
+  near clip plane: 0.1
   far clip plane: 15
   field of view: 26.991467
   orthographic: 0
@@ -239,7 +239,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 1
+  m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -271,7 +271,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b2a7e2c492f9a845a376f3d69f34b08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JumpAmount: 100
+  JumpAmount: 160
   MoveAmount: 1.5
   RotationAmount: 0.4
-  m_isJumping: 0

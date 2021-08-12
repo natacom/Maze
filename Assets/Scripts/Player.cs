@@ -10,8 +10,7 @@ public class Player : MonoBehaviour
     public float RotationAmount;
 
     private Rigidbody m_rigid;
-
-    public bool m_isJumping = false;
+    private bool m_isJumping = false;
 
     // Start is called before the first frame update
     void Start()
