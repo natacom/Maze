@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
         Instantiate(
             PlayerPref,
             new Vector3(0.5f, 0.6f, 0.5f),
-            Quaternion.identity,
+            Quaternion.Euler(0, 45, 0),
             Field.transform);
 
         // Add goal
@@ -34,5 +34,8 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            Application.Quit();
+        }
     }
 }

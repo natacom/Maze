@@ -273,4 +273,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   JumpAmount: 160
   MoveAmount: 1.5
-  RotationAmount: 0.4
+  RotationAmount: 1.5
